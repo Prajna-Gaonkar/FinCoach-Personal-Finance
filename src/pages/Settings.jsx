@@ -130,7 +130,7 @@ const Settings = ({
       </div>
 
       {/* Main Double column grid */}
-      <div className="dashboard-grid" style={{ gridTemplateColumns: '1.2fr 0.8fr' }}>
+      <div className="dashboard-grid layout-split settings-split">
         
         {/* Left Side: General Profiles and Category configs */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>

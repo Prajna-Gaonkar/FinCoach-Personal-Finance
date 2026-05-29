@@ -22,7 +22,7 @@ const Analytics = ({ transactions, budgets, settings, theme }) => {
       </div>
 
       {/* Main Layout Grid */}
-      <div className="dashboard-grid" style={{ gridTemplateColumns: '1.8fr 1.2fr' }}>
+      <div className="dashboard-grid layout-split analytics-split">
         
         {/* Left Side: Charts Visualization */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>

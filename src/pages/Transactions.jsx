@@ -130,11 +130,10 @@ const Transactions = ({
       </div>
 
       {/* Search, Filter & Sort Controls Panel */}
-      <div className="card" style={{ marginBottom: '24px', padding: '18px 24px' }}>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', alignItems: 'center', justifyContent: 'space-between' }}>
+      <div className="card toolbar-card">
+        <div className="toolbar-filters" style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', alignItems: 'center', justifyContent: 'space-between' }}>
           
-          {/* Search Box */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flex: '1', minWidth: '240px', position: 'relative' }}>
+          <div className="toolbar-search" style={{ display: 'flex', alignItems: 'center', gap: '8px', flex: '1', minWidth: '240px', position: 'relative' }}>
             <Search size={16} style={{ position: 'absolute', left: '14px', color: 'var(--text-secondary)' }} />
             <input 
               type="text" 
@@ -146,8 +145,7 @@ const Transactions = ({
             />
           </div>
 
-          {/* Category Filter dropdown */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: '180px' }}>
+          <div className="toolbar-category" style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: '180px' }}>
             <Filter size={16} style={{ color: 'var(--text-secondary)' }} />
             <select 
               value={categoryFilter} 
@@ -161,8 +159,7 @@ const Transactions = ({
             </select>
           </div>
 
-          {/* Sort Controls */}
-          <div className="flex-gap-8" style={{ flexWrap: 'wrap' }}>
+          <div className="flex-gap-8 toolbar-sort" style={{ flexWrap: 'wrap' }}>
             <button 
               onClick={() => toggleSort('date')} 
               className={`btn btn-secondary btn-sm flex-gap-8 ${sortField === 'date' ? 'active' : ''}`}
@@ -187,7 +184,56 @@ const Transactions = ({
 
       {/* Transaction table */}
       <div className="card">
-        <div className="table-container">
+        <ul className="tx-mobile-list" aria-label="Transactions list">
+          {paginatedTx.map((tx) => (
+            <li key={tx.id} className="tx-mobile-card">
+              <div className="tx-mobile-card-top">
+                <span className="tx-mobile-card-title">{tx.title}</span>
+                <span
+                  className="tx-mobile-card-amount"
+                  style={{ color: tx.type === 'income' ? 'var(--success)' : 'var(--text-primary)' }}
+                >
+                  {tx.type === 'income' ? '+' : '-'}
+                  {settings.currency}
+                  {Number(tx.amount).toLocaleString()}
+                </span>
+              </div>
+              <div className="tx-mobile-card-meta">
+                {tx.type === 'income' ? (
+                  <span className="kpi-icon-wrapper income" style={{ width: '24px', height: '24px', borderRadius: '6px' }}>
+                    <ArrowUpRight size={12} />
+                  </span>
+                ) : (
+                  <span className="kpi-icon-wrapper expense" style={{ width: '24px', height: '24px', borderRadius: '6px' }}>
+                    <ArrowDownRight size={12} />
+                  </span>
+                )}
+                <span className={`badge ${tx.type === 'income' ? 'badge-income' : 'badge-expense'}`}>
+                  {tx.category}
+                </span>
+                <span>{tx.date}</span>
+              </div>
+              <div className="tx-mobile-card-actions">
+                <button
+                  type="button"
+                  onClick={() => handleDelete(tx.id)}
+                  className="btn btn-secondary btn-sm"
+                  style={{ color: 'var(--danger)', borderColor: 'rgba(239, 68, 68, 0.2)' }}
+                >
+                  <Trash2 size={14} />
+                  <span>Delete</span>
+                </button>
+              </div>
+            </li>
+          ))}
+          {paginatedTx.length === 0 && (
+            <li className="tx-mobile-card" style={{ textAlign: 'center', color: 'var(--text-muted)' }}>
+              No transactions match your filters.
+            </li>
+          )}
+        </ul>
+
+        <div className="table-container table-desktop">
           <table className="table">
             <thead>
               <tr>
@@ -251,11 +297,11 @@ const Transactions = ({
 
         {/* Pagination buttons */}
         {totalPages > 1 && (
-          <div className="flex-between" style={{ marginTop: '20px' }}>
+          <div className="flex-between pagination-bar" style={{ marginTop: '20px' }}>
             <span style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
               Showing {((currentPage - 1) * itemsPerPage) + 1} - {Math.min(currentPage * itemsPerPage, sortedTx.length)} of {sortedTx.length} items
             </span>
-            <div className="flex-gap-8">
+            <div className="flex-gap-8 pagination-buttons">
               <button 
                 onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                 disabled={currentPage === 1}
