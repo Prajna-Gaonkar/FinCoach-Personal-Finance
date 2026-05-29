@@ -87,9 +87,11 @@ body {
   min-height: 100vh;
 }
 
-/* Layout Shell */
-.app-container {
+/* Layout Shell — sidebar + main (desktop/tablet) */
+.app-layout {
   display: flex;
+  flex-direction: row;
+  align-items: stretch;
   width: 100%;
   min-width: 0;
   min-height: 100vh;
@@ -228,10 +230,13 @@ body {
   background-color: var(--bg-primary);
 }
 
-/* Page roots inside main should use full content width */
-.main-content > * {
-  width: 100%;
-  max-width: 100%;
+/* Page roots fill main area on tablet/desktop */
+@media (min-width: 768px) {
+  .main-content > * {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
 }
 
 /* Top Navbar bar */
@@ -740,10 +745,8 @@ body.light-theme .table tr:hover td {
   }
 }
 
-/* ========== Responsive: mobile header, drawer, bottom nav (hidden on lg+) ========== */
-.mobile-header,
-.mobile-bottom-nav,
-.mobile-drawer-overlay {
+/* ========== Mobile shell (header + bottom nav) — outside flex layout ========== */
+.mobile-shell {
   display: none;
 }
 
@@ -796,8 +799,18 @@ body.light-theme .table tr:hover td {
 
 /* ========== Mobile (< 768px) ========== */
 @media (max-width: 767px) {
+  .mobile-shell {
+    display: block;
+  }
+
   .sidebar-desktop {
     display: none !important;
+  }
+
+  .app-layout {
+    display: block;
+    width: 100%;
+    min-height: 100dvh;
   }
 
   .mobile-header {
@@ -970,15 +983,22 @@ body.light-theme .table tr:hover td {
     background: rgba(99, 102, 241, 0.1);
   }
 
-  .app-container {
-    flex-direction: column;
-  }
-
   .main-content {
-    padding: 72px 16px 88px;
-    min-height: 100vh;
+    flex: none;
+    padding: 72px 16px calc(80px + env(safe-area-inset-bottom, 0px));
+    min-height: 100dvh;
     height: auto;
     width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .main-content > * {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
   }
 
   .top-navbar {
@@ -1120,6 +1140,13 @@ body.light-theme .table tr:hover td {
     flex-wrap: wrap;
     gap: 4px;
     font-size: 12px;
+  }
+}
+
+/* Tablet/desktop: hide mobile UI */
+@media (min-width: 768px) {
+  .mobile-shell {
+    display: none !important;
   }
 }
 

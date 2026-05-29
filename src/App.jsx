@@ -5,6 +5,7 @@ import { getData, saveData } from './utils/localStorage';
 
 // Shell & Common Components
 import Sidebar from './components/Common/Sidebar';
+import MobileNav from './components/Common/MobileNav';
 
 // Sub Pages
 import Dashboard from './pages/Dashboard';
@@ -161,19 +162,27 @@ function App() {
   };
 
   return (
-    <div className="app-container">
-      <Sidebar 
-        currentPage={currentPage} 
-        setCurrentPage={setCurrentPage} 
+    <>
+      <MobileNav
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
         settings={settings}
         theme={theme}
         toggleTheme={toggleTheme}
       />
-
-      <main className="main-content">
-        {renderCurrentPage()}
-      </main>
-    </div>
+      <div className="app-layout">
+        <Sidebar
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          settings={settings}
+          theme={theme}
+          toggleTheme={toggleTheme}
+        />
+        <main className="main-content">
+          {renderCurrentPage()}
+        </main>
+      </div>
+    </>
   );
 }
 
