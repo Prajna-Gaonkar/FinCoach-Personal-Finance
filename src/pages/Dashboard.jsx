@@ -175,14 +175,50 @@ const Dashboard = ({ transactions, budgets, goals, subscriptions, settings, setC
               <span onClick={() => setCurrentPage('transactions')} className="widget-action">View all <ArrowRight size={14} style={{ display: 'inline', marginLeft: '4px', verticalAlign: 'middle' }} /></span>
             </div>
             
-            <div className="table-container">
+            <ul className="tx-mobile-list" aria-label="Recent transactions">
+              {recentTx.map((tx) => (
+                <li key={tx.id} className="tx-mobile-card">
+                  <div className="tx-mobile-card-top">
+                    <span className="tx-mobile-card-title">{tx.title}</span>
+                    <span
+                      className="tx-mobile-card-amount"
+                      style={{ color: tx.type === 'income' ? 'var(--success)' : 'var(--text-primary)' }}
+                    >
+                      {tx.type === 'income' ? '+' : '-'}{settings.currency}{Number(tx.amount).toLocaleString()}
+                    </span>
+                  </div>
+                  <div className="tx-mobile-card-meta">
+                    {tx.type === 'income' ? (
+                      <span className="kpi-icon-wrapper income" style={{ width: '24px', height: '24px', borderRadius: '6px' }}>
+                        <ArrowUpRight size={12} />
+                      </span>
+                    ) : (
+                      <span className="kpi-icon-wrapper expense" style={{ width: '24px', height: '24px', borderRadius: '6px' }}>
+                        <ArrowDownRight size={12} />
+                      </span>
+                    )}
+                    <span className={`badge ${tx.type === 'income' ? 'badge-income' : 'badge-expense'}`}>
+                      {tx.category}
+                    </span>
+                    <span>{tx.date}</span>
+                  </div>
+                </li>
+              ))}
+              {recentTx.length === 0 && (
+                <li className="tx-mobile-card" style={{ textAlign: 'center', color: 'var(--text-muted)' }}>
+                  No transactions yet. Add one from the Transactions page.
+                </li>
+              )}
+            </ul>
+
+            <div className="table-container table-desktop">
               <table className="table">
                 <thead>
                   <tr>
                     <th>Title</th>
                     <th>Category</th>
                     <th>Date</th>
-                    <th style={{ textAlignment: 'right' }}>Amount</th>
+                    <th style={{ textAlign: 'right' }}>Amount</th>
                   </tr>
                 </thead>
                 <tbody>
