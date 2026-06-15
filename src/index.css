@@ -1250,12 +1250,12 @@ body.light-theme .table tr:hover td {
   .mobile-shell {
     display: none !important;
   }
-}
 
-/* Desktop: hide mobile transaction cards */
-.tx-mobile-list {
-  display: none;
-  list-style: none;
+  /* Desktop: hide mobile transaction cards */
+  .tx-mobile-list {
+    display: none;
+    list-style: none;
+  }
 }
 
 .tx-mobile-card {

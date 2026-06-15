@@ -84,7 +84,14 @@ const Transactions = ({
 
   // Filter & Sort Logic
   const filteredTx = transactions.filter((tx) => {
-    const matchesSearch = tx.title.toLowerCase().includes(search.toLowerCase());
+    const query = search.toLowerCase().trim();
+    const matchesSearch = !query || [
+      tx.title,
+      tx.category,
+      tx.date,
+      String(tx.amount)
+    ].some((value) => value.toLowerCase().includes(query));
+
     const matchesCategory = categoryFilter === 'All' || tx.category === categoryFilter;
     return matchesSearch && matchesCategory;
   });
