@@ -630,28 +630,96 @@ body.light-theme .btn-secondary {
   letter-spacing: 0.5px;
 }
 
-body.light-theme .table th {
-  background-color: rgba(0, 0, 0, 0.01);
-}
+  .table td {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-primary);
+  }
 
-.table td {
-  padding: 16px 20px;
-  border-bottom: 1px solid var(--border-color);
-  color: var(--text-primary);
-}
+  .table tr:last-child td {
+    border-bottom: none;
+  }
 
-.table tr:last-child td {
-  border-bottom: none;
-}
+  .table tr:hover td {
+    background-color: rgba(255, 255, 255, 0.02);
+  }
 
-.table tr:hover td {
-  background-color: rgba(255, 255, 255, 0.02);
-}
+  body.light-theme .table tr:hover td {
+    background-color: rgba(0, 0, 0, 0.01);
+  }
 
-body.light-theme .table tr:hover td {
-  background-color: rgba(0, 0, 0, 0.01);
-}
+  .report-table td[data-label] {
+    font-size: 14px;
+  }
 
+  @media (max-width: 767px) {
+    .report-table {
+      border: 0;
+    }
+
+    .report-table thead {
+      display: none;
+    }
+
+    .report-table tr {
+      display: block;
+      margin-bottom: 16px;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      background: var(--bg-secondary);
+      padding: 16px;
+    }
+
+    .report-table td {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border: none;
+    }
+
+    .report-table td::before {
+      content: attr(data-label);
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-right: 12px;
+      flex: 1;
+      white-space: nowrap;
+    }
+
+    .report-table td > span,
+    .report-table td > strong {
+      flex: 1;
+      text-align: right;
+    }
+
+    .report-summary-block {
+      padding: 16px;
+      margin-bottom: 18px;
+    }
+
+    .top-navbar {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .top-navbar .welcome-section h1 {
+      font-size: 26px;
+    }
+
+    .top-navbar .welcome-section p {
+      font-size: 14px;
+    }
+
+    .card {
+      padding: 18px;
+    }
+
+    .dashboard-grid {
+      gap: 16px;
+    }
+  }
 /* Badges & Tags */
 .badge {
   display: inline-flex;

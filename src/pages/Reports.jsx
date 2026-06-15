@@ -103,7 +103,7 @@ const Reports = ({ transactions, budgets, settings }) => {
           </div>
 
           <div className="table-container">
-            <table className="table">
+            <table className="table report-table">
               <thead>
                 <tr>
                   <th>Category</th>
@@ -118,16 +118,19 @@ const Reports = ({ transactions, budgets, settings }) => {
                   const isOver = b.alertLevel === 'exceeded';
                   return (
                     <tr key={b.category}>
-                      <td style={{ fontWeight: '600' }}>{b.category}</td>
-                      <td>{settings.currency}{b.limit.toLocaleString()}</td>
-                      <td>{settings.currency}{b.spent.toLocaleString()}</td>
-                      <td style={{ 
-                        fontWeight: '700',
-                        color: isOver ? 'var(--danger)' : 'var(--success)'
-                      }}>
+                      <td data-label="Category" style={{ fontWeight: '600' }}>{b.category}</td>
+                      <td data-label="Budget Limit">{settings.currency}{b.limit.toLocaleString()}</td>
+                      <td data-label="Actual spent">{settings.currency}{b.spent.toLocaleString()}</td>
+                      <td
+                        data-label="Over / Under"
+                        style={{ 
+                          fontWeight: '700',
+                          color: isOver ? 'var(--danger)' : 'var(--success)'
+                        }}
+                      >
                         {isOver ? '+' : '-'}{settings.currency}{Math.abs(b.diff).toLocaleString()}
                       </td>
-                      <td>
+                      <td data-label="Status">
                         <span className={`badge ${b.alertLevel === 'exceeded' ? 'badge-danger' : b.alertLevel === 'warning' ? 'badge-warning' : 'badge-success'}`}>
                           {b.alertLevel}
                         </span>
